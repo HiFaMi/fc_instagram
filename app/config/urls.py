@@ -18,8 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from . import views
+from members.apis import UserList
 from posts.apis import PostList
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,8 +28,15 @@ urlpatterns = [
     path('members/', include('members.urls')),
     path('', views.index, name='index'),
 
+    # api/로 시작하는 경우를 공통적으로 사용하도록
+    # config.urls와
+    #   post.urls
+    #   members.urls
+    #       를 적절히 수정 (post.urls, members.urls모듈을 패키지화해서 분리해야 함)
     path('api/posts/', PostList.as_view()),
-] + static(
-        prefix=settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT,
-    )
+    path('api/users/', UserList.as_view()),
+]
+urlpatterns += static(
+    prefix=settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT,
+)
