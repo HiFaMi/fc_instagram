@@ -24,16 +24,16 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('posts/', include('posts.urls')),
+    path('posts/', include('posts.urls.views')),
     path('members/', include('members.urls')),
     path('', views.index, name='index'),
 
     # api/로 시작하는 경우를 공통적으로 사용하도록
     # config.urls와
-    #   post.urls
+    #   posts.urls
     #   members.urls
     #       를 적절히 수정 (post.urls, members.urls모듈을 패키지화해서 분리해야 함)
-    path('api/posts/', PostList.as_view()),
+    path('api/posts/', include('posts.urls.apis')),
     path('api/users/', UserList.as_view()),
 ]
 urlpatterns += static(
