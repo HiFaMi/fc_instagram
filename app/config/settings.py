@@ -43,6 +43,11 @@ AUTHENTICATION_BACKENDS = [
 ]
 LOGIN_URL = 'members:login'
 
+# CORS
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3001',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -58,9 +63,12 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
