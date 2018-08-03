@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -35,3 +35,13 @@ class AuthToken(APIView):
             return Response(data)
         # authenticate에 실패한 경우
         raise AuthenticationFailed('인증정보가 올바르지 않습니다')
+
+
+class AuthenticationTest(APIView):
+    # URL: /api/users/auth-test/
+    def get(self, request):
+        # request.user가 인증 된 상태일 경우, UserSerializer를 사용해 렌더링한 데이터를 보내줌
+        # 인증되지 않았을 경우 NotAuthenticated Exception을 raise
+        if request.user.is_authenticated:
+            return Response(UserSerializer(request.user).data)
+        raise NotAuthenticated('로그인 되어있지 않습니다')

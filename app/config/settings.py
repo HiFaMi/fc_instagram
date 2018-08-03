@@ -48,6 +48,14 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3001',
 )
 
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
 # Application definition
 
 INSTALLED_APPS = [
