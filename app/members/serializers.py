@@ -11,4 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
             'pk',
             'username',
             'img_profile',
+            'first_name',
+            'last_name',
         )
