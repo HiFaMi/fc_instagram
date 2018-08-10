@@ -72,3 +72,14 @@ class FacebookAuthToken(APIView):
             'user': UserSerializer(user).data,
         }
         return Response(data)
+
+
+class Profile(APIView):
+    def get(self, request):
+        # URL: /api/users/profile/
+        # request.user가 인증되어 있으면
+        #   UserSerializer로 serialize한 결과를 리턴
+        # 인증 안되어있으면 NotAuthenticated예외 발생
+        if request.user.is_authenticated:
+            return Response(UserSerializer(request.user).data)
+        raise NotAuthenticated('인증안됨')
